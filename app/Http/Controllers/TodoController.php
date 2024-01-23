@@ -71,7 +71,7 @@ class TodoController extends Controller
     {
         $todo = $this->todoService->create($request->toDTO());
 
-        activityLog($todo, 'Пользователь создал todo', 'toto',);
+        activityLog($todo, 'Пользователь создал todo', 'toto');
 
 
         return new TodoResource($todo);
@@ -120,7 +120,7 @@ class TodoController extends Controller
     {
         $this->todoService->update($todo, $request->toDTO());
 
-        activityLog($todo, 'Пользователь обновил todo', 'toto',);
+        activityLog($todo, 'Пользователь обновил todo', 'toto');
 
 
         return new TodoResource($todo);
@@ -145,7 +145,7 @@ class TodoController extends Controller
     {
         $todo->delete();
 
-        activityLog($todo, 'Пользователь удалил todo', 'toto',);
+        activityLog($todo, 'Пользователь удалил todo', 'toto');
 
 
         return $this->respondEmpty();
