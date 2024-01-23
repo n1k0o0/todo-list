@@ -3,6 +3,7 @@
 namespace App\Http\Requests\Todo;
 
 use App\DTO\Todo\TodoDTO;
+use App\Models\Todo;
 use App\Traits\ToDTOTrait;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
@@ -20,6 +21,9 @@ use OpenApi\Attributes\RequestBody;
         ]
     )
 )]
+/**
+ * @property-read Todo $todo
+ * */
 class UpdateTodoRequest extends FormRequest
 {
     use ToDTOTrait;
@@ -31,7 +35,7 @@ class UpdateTodoRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return true;
+        return auth('users')->id() === $this->todo->user_id;
     }
 
     /**

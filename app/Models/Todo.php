@@ -8,12 +8,14 @@ class Todo extends Model
 {
     protected $fillable = [
         'name',
-        'is_done'
+        'is_done',
+        'user_id',
     ];
 
     protected $casts = [
         'id' => 'integer',
         'is_done' => 'boolean',
+        'user_id' => 'boolean',
     ];
 
     /**

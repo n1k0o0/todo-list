@@ -10,6 +10,9 @@ use Symfony\Component\HttpFoundation\Response;
 
 class Controller extends BaseController
 {
+    use AuthorizesRequests;
+    use ValidatesRequests;
+
     /**
      *
      * @param mixed $data

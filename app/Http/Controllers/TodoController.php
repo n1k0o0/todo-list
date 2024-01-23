@@ -34,8 +34,6 @@ class TodoController extends Controller
     public function __construct(public TodoService $todoService) {}
 
 
-//    #[Info(version: '1.0', title: 'Todo2')]
-
     /**
      * @return TodoCollection
      */
@@ -143,10 +141,11 @@ class TodoController extends Controller
      */
     public function destroy(Todo $todo): JsonResponse
     {
+        $this->authorize('delete', $todo);
+
         $todo->delete();
 
         activityLog($todo, 'Пользователь удалил todo', 'toto');
-
 
         return $this->respondEmpty();
     }
