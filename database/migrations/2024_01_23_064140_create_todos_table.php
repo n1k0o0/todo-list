@@ -14,6 +14,7 @@ return new class extends Migration {
             $table->id();
             $table->string('name');
             $table->boolean('is_done')->default(false);
+            $table->foreignIdFor(\App\Models\User::class);
             $table->timestamps();
         });
     }
