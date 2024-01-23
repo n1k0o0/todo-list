@@ -1,0 +1,173 @@
+openapi: 3.0.0
+info:
+  title: 'My First API'
+  version: '0.1'
+servers:
+  -
+    url: api.todo.loc
+    description: Local
+paths:
+  /api/todos:
+    get:
+      operationId: dd687d49d7f86d473ce56a7806776fc4
+      responses:
+        '200':
+          description: AOK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TodoCollection'
+        '401':
+          description: 'Not allowed'
+      security:
+        -
+          bearerAuth: []
+    post:
+      summary: 'Store a newly created resource in storage.'
+      operationId: 6f5da079c2dace66df52625276205a32
+      requestBody:
+        $ref: '#/components/requestBodies/StoreTodoRequest'
+      responses:
+        '200':
+          description: AOK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TodoResource'
+        '401':
+          description: 'Not allowed'
+      security:
+        -
+          bearerAuth: []
+  '/api/todos/{todo_id}':
+    get:
+      summary: 'Display the specified resource.'
+      operationId: 975ac8badb717041cd5cb4ba1f1d7e2e
+      parameters:
+        -
+          name: todo_id
+          in: path
+          description: 'id of todo'
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: AOK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TodoResource'
+        '401':
+          description: 'Not allowed'
+      security:
+        -
+          bearerAuth: []
+    put:
+      summary: 'Store a newly created resource in storage.'
+      operationId: 403fe25db5ee6f73c82b50489a9542fb
+      parameters:
+        -
+          name: todo_id
+          in: path
+          description: 'id of todo'
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        $ref: '#/components/requestBodies/UpdateTodoRequest'
+      responses:
+        '200':
+          description: AOK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TodoResource'
+        '401':
+          description: 'Not allowed'
+      security:
+        -
+          bearerAuth: []
+    delete:
+      operationId: 5453461cbc6bc36a93e89d2d94309eff
+      parameters:
+        -
+          name: todo_id
+          in: path
+          description: 'id of todo'
+          required: true
+          schema:
+            type: integer
+      responses:
+        '204':
+          description: Empty
+        '401':
+          description: 'Not allowed'
+      security:
+        -
+          bearerAuth: []
+components:
+  schemas:
+    TodoCollection:
+      title: TodoCollection
+      description: TodoCollection
+      properties:
+        data:
+          description: Data
+          type: array
+          items:
+            $ref: '#/components/schemas/TodoResource'
+        count:
+          description: 'Total count'
+          type: integer
+          example: 150
+      type: object
+    TodoResource:
+      title: TodoResource
+      description: TodoResource
+      properties:
+        id:
+          description: Id
+          type: integer
+          example: 150
+        name:
+          description: name
+          type: string
+          example: first
+        is_done:
+          description: 'Is done'
+          type: boolean
+          example: true
+      type: object
+  requestBodies:
+    StoreTodoRequest:
+      required: true
+      content:
+        application/json:
+          schema:
+            properties:
+              name:
+                description: Name
+                type: string
+                example: name
+            type: object
+    UpdateTodoRequest:
+      required: true
+      content:
+        application/json:
+          schema:
+            properties:
+              name:
+                description: Name
+                type: string
+                example: name
+              is_done:
+                description: 'Is done'
+                type: boolean
+                example: true
+            type: object
+  securitySchemes:
+    bearerAuth:
+      type: http
+      bearerFormat: JWT
+      scheme: bearer
