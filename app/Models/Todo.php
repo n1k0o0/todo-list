@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 
 class Todo extends Model
@@ -15,7 +16,7 @@ class Todo extends Model
     protected $casts = [
         'id' => 'integer',
         'is_done' => 'boolean',
-        'user_id' => 'boolean',
+        'user_id' => 'integer',
     ];
 
     /**
@@ -28,6 +29,15 @@ class Todo extends Model
         static::creating(static function ($model) {
             $model->user_id = auth('users')->id();
         });
+    }
+
+    /**
+     * @param Builder $query
+     * @return Builder
+     */
+    public function scopeOwn(Builder $query): Builder
+    {
+        return $query->where('user_id', auth('users')->id());
     }
 
 }

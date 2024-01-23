@@ -47,7 +47,7 @@ class TodoController extends Controller
     )]
     public function index(): TodoCollection
     {
-        $todos = Todo::query()->get();
+        $todos = Todo::query()->own()->get();
 
         return new TodoCollection($todos);
     }
@@ -91,6 +91,7 @@ class TodoController extends Controller
     )]
     public function show(Todo $todo): TodoResource
     {
+        $this->authorize('view', $todo);
         return new TodoResource($todo);
     }
 

@@ -112,4 +112,18 @@ class Controller extends BaseController
         }
         return response()->json($data, Response::HTTP_OK);
     }
+
+    /**
+     * @param $token
+     *
+     * @return JsonResponse
+     */
+    protected function respondWithToken($token): JsonResponse
+    {
+        return $this->respondSuccess([
+            'access_token' => $token,
+            'token_type' => 'bearer',
+//            'expires_in' => auth('internal-users')->factory()->getTTL() * 60
+        ]);
+    }
 }
